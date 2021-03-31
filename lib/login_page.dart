@@ -1,11 +1,11 @@
-// ignore: avoid_web_libraries_in_flutter
 
-import 'dart:io';
-
+import 'dart:developer';
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/coin_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,8 +13,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -130,7 +132,6 @@ class _LoginPageState extends State<LoginPage> {
           )),
     );
   }
-
 }
 
 void _showToast() {
@@ -144,35 +145,64 @@ void _showToast() {
 }
 
 void _pushNavigator(context) {
-  Navigator.push(
-      context, MaterialPageRoute(builder: (context) => SecondMonitor()));
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Coins()));
+}
+
+class Coins extends StatefulWidget {
+  @override
+  _CoinsState createState() => _CoinsState();
 }
 
 
-_makeGetRequest() async{
-  String url="https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=5782b99a-b379-4222-8076-fde6da7a0cf7&start=1";
-  Response response=await get(url);
-  int code=response.statusCode;
-  Map<String, String> headers = response.headers;
-  String contentType = headers['content-type'];
-  String json = response.body;
 
-}
-class SecondMonitor extends StatelessWidget {
+class _CoinsState extends State<Coins> {
+   List<CoinModel> _data;
+   Future<List<CoinModel>> getCoin() async {
+     String url =
+         "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=5782b99a-b379-4222-8076-fde6da7a0cf7&start=1";
+
+     var response = await http.get( url, headers: {"Accept": "application/json"});
+
+     setState(() {
+       dynamic res= json.decode(response.body);
+       print('res $res');
+      // var test=CoinModel.fromJsonMap(res);
+
+         List<dynamic> dataJson = res['data'];
+         List<CoinModel> list = dataJson.map((widgetJson) {
+           return CoinModel.fromJsonMap(widgetJson);
+         }).toList();
+
+         _data=list;
+       print('Response$list');
+     });
+
+
+
+   }
+
+  @override
+  void initState() {
+    super.initState();
+    getCoin();
+  }
   @override
   Widget build(BuildContext context) {
+     log("mes $_data");
     return Scaffold(
-      body: Center(child: ListView.builder(itemBuilder: (context, i) {
-        return Card(
-          child: InkWell(
-            onTap: _showToast,
-            child: Text(
-              i.toString(),
-              style: TextStyle(fontSize: 20, color: Colors.green),
+      body: ListView.builder(
+        itemCount: _data==null ? 0 : _data.length,
+          itemBuilder: (context,index){
+          final item=_data[index];
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundColor: Colors.green,
             ),
-          ),
-        );
-      })),
+            title: Text(item.name),
+            trailing: Text(item.quote.usd.price.toString()),
+          );
+      }),
     );
   }
 }
+
