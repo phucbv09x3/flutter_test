@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
@@ -13,10 +12,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -55,73 +52,75 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.white12,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(14)),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(10, 18, 10, 0),
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(10, 16, 10, 0),
-                                    child: TextFormField(
-                                      autofocus: false,
-                                      decoration: InputDecoration(
-                                          filled: true,
-                                          fillColor: Colors.white24,
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.red)),
-                                          hintText: 'Email',
-                                          prefixIcon: Icon(Icons.mail),
-                                          labelText: 'Email'),
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(10, 18, 10, 0),
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(10, 16, 10, 0),
+                                      child: TextFormField(
+                                        autofocus: false,
+                                        decoration: InputDecoration(
+                                            filled: true,
+                                            fillColor: Colors.white24,
+                                            focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.red)),
+                                            hintText: 'Email',
+                                            prefixIcon: Icon(Icons.mail),
+                                            labelText: 'Email'),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(10, 18, 10, 0),
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(10, 16, 10, 0),
-                                    child: TextFormField(
-                                      autofocus: false,
-                                      decoration: InputDecoration(
-                                          filled: true,
-                                          fillColor: Colors.white24,
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.red)),
-                                          hintText: 'Password',
-                                          prefixIcon: Icon(Icons.lock),
-                                          labelText: 'Password'),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(10, 18, 10, 0),
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(10, 16, 10, 0),
+                                      child: TextFormField(
+                                        autofocus: false,
+                                        decoration: InputDecoration(
+                                            filled: true,
+                                            fillColor: Colors.white24,
+                                            focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.red)),
+                                            hintText: 'Password',
+                                            prefixIcon: Icon(Icons.lock),
+                                            labelText: 'Password'),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(10, 18, 10, 0),
-                                  child: Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(10, 16, 10, 0),
-                                      child: SizedBox(
-                                        width: 200,
-                                        height: 60,
-                                        child: FlatButton(
-                                          color: Colors.red,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20))),
-                                          child: Text(
-                                            'Login',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 29),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(10, 18, 10, 0),
+                                    child: Padding(
+                                        padding:
+                                        EdgeInsets.fromLTRB(10, 16, 10, 0),
+                                        child: SizedBox(
+                                          width: 200,
+                                          height: 60,
+                                          child: FlatButton(
+                                            color: Colors.red,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20))),
+                                            child: Text(
+                                              'Login',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 29),
+                                            ),
+                                            onPressed: () {
+                                              _pushNavigator(context);
+                                              // Navigator.push(
+                                              //     context, MaterialPageRoute(builder: (context) => SecondMonitor()));
+                                            },
                                           ),
-                                          onPressed: () {
-                                            _pushNavigator(context);
-                                            // Navigator.push(
-                                            //     context, MaterialPageRoute(builder: (context) => SecondMonitor()));
-                                          },
-                                        ),
-                                      )),
-                                ),
-                              ],
+                                        )),
+                                  ),
+                                ],
+                              ),
                             )),
                       ),
                     ),
@@ -153,56 +152,52 @@ class Coins extends StatefulWidget {
   _CoinsState createState() => _CoinsState();
 }
 
-
-
 class _CoinsState extends State<Coins> {
-   List<CoinModel> _data;
-   Future<List<CoinModel>> getCoin() async {
-     String url =
-         "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=5782b99a-b379-4222-8076-fde6da7a0cf7&start=1";
+  List<CoinModel> _data;
 
-     var response = await http.get( url, headers: {"Accept": "application/json"});
+  Future<List<CoinModel>> getCoin() async {
+    String url =
+        "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=5782b99a-b379-4222-8076-fde6da7a0cf7&start=1";
 
-     setState(() {
-       dynamic res= json.decode(response.body);
-       print('res $res');
+    var response = await http.get(url, headers: {"Accept": "application/json"});
+
+    setState(() {
+      dynamic res = json.decode(response.body);
+      print('res $res');
       // var test=CoinModel.fromJsonMap(res);
 
-         List<dynamic> dataJson = res['data'];
-         List<CoinModel> list = dataJson.map((widgetJson) {
-           return CoinModel.fromJsonMap(widgetJson);
-         }).toList();
+      List<dynamic> dataJson = res['data'];
+      List<CoinModel> list = dataJson.map((widgetJson) {
+        return CoinModel.fromJsonMap(widgetJson);
+      }).toList();
 
-         _data=list;
-       print('Response$list');
-     });
-
-
-
-   }
+      _data = list;
+      print('Response$list');
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     getCoin();
   }
+
   @override
   Widget build(BuildContext context) {
-     log("mes $_data");
+    log("mes $_data");
     return Scaffold(
       body: ListView.builder(
-        itemCount: _data==null ? 0 : _data.length,
-          itemBuilder: (context,index){
-          final item=_data[index];
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.green,
-            ),
-            title: Text(item.name),
-            trailing: Text(item.quote.usd.price.toString()),
-          );
-      }),
+          itemCount: _data == null ? 0 : _data.length,
+          itemBuilder: (context, index) {
+            final item = _data[index];
+            return ListTile(
+              leading: CircleAvatar(
+                backgroundColor: Colors.green,
+              ),
+              title: Text(item.name),
+              trailing: Text(item.quote.usd.price.toString()),
+            );
+          }),
     );
   }
 }
-
